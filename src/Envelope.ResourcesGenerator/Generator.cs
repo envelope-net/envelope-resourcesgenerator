@@ -99,6 +99,7 @@ public class Generator
 	public static void GenerateResources(
 		string targetProject,
 		string rootNamespace,
+		bool generateOnlyKeys,
 		Assembly assembly,
 		CultureInfo? defaultCulture,
 		List<CultureInfo>? checkForCultures = null,
@@ -121,6 +122,7 @@ public class Generator
 		resourcesGenerator.SetParam("TargetProject", targetProject);
 		resourcesGenerator.SetParam("RootNamespace", rootNamespace);
 		resourcesGenerator.SetParam("ResFiles", resFiles);
+		resourcesGenerator.SetParam("OnlyKeys", generateOnlyKeys);
 		resourcesGenerator.TransformText();
 		var errors = resourcesGenerator.ErrorString();
 		if (!string.IsNullOrWhiteSpace(errors))

@@ -42,6 +42,7 @@ namespace Envelope.ResourcesGenerator
 	string targetProject = GetParam("TargetProject");
 	string nmspace = GetParam("RootNamespace");
 	var resFiles = GetParam<List<Envelope.Localization.ResourceFile>>("ResFiles");
+	var onlyKeys = GetParam<bool>("OnlyKeys");
 	
 	foreach (var resFile in resFiles)
 	{
@@ -70,14 +71,14 @@ using Envelope.Localization;
 
 namespace ");
             
-            #line 41 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
+            #line 42 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(nmspace));
             
             #line default
             #line hidden
             this.Write(";\r\n\r\n");
             
-            #line 43 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
+            #line 44 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
 
 		foreach (var parentClass in resStructure)
 		{
@@ -86,110 +87,142 @@ namespace ");
             #line default
             #line hidden
             
-            #line 47 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
+            #line 48 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GetIdent(ident)));
             
             #line default
             #line hidden
             this.Write("public partial class ");
             
-            #line 47 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
+            #line 48 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(parentClass));
             
             #line default
             #line hidden
             this.Write("\r\n");
             
-            #line 48 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
+            #line 49 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GetIdent(ident)));
             
             #line default
             #line hidden
             this.Write("{\r\n");
             
-            #line 49 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
+            #line 50 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
 
 			ident++;
 		}
 		string className = resFile.Name.ToCammelCase(removeUnderscores: false);
 		var baseName = resPath.TrimPrefix(targetProject).Replace(System.IO.Path.DirectorySeparatorChar, '.') + "." + resFile.Name;
+		var baseNamespace = "global::" + nmspace + "." + baseName;
 
             
             #line default
             #line hidden
             
-            #line 55 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
+            #line 57 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GetIdent(ident)));
             
             #line default
             #line hidden
             this.Write("public partial class ");
             
-            #line 55 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
+            #line 57 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(className));
             
             #line default
             #line hidden
             this.Write("\r\n");
             
-            #line 56 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
+            #line 58 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GetIdent(ident)));
             
             #line default
             #line hidden
             this.Write("{\r\n");
             
-            #line 57 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(GetIdent(ident + 1)));
-            
-            #line default
-            #line hidden
-            this.Write("private static Lazy<IStringLocalizer> _stringLocalizer = new Lazy<IStringLocalize" +
-                    "r>(() => Resources.Localizers.GetStringLocalizer<Resources.");
-            
-            #line 57 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(baseName));
-            
-            #line default
-            #line hidden
-            this.Write(">());\r\n\r\n");
-            
             #line 59 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(GetIdent(ident + 1)));
+
+	if (!onlyKeys)
+	{
+
             
             #line default
             #line hidden
-            this.Write("public static IStringLocalizer StringLocalizer => _stringLocalizer.Value;\r\n\r\n");
-            
-            #line 61 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(GetIdent(ident + 1)));
-            
-            #line default
-            #line hidden
-            this.Write("public const string __BaseName = \"");
-            
-            #line 61 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(baseName));
-            
-            #line default
-            #line hidden
-            this.Write("\";\r\n\r\n");
             
             #line 63 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GetIdent(ident + 1)));
             
             #line default
             #line hidden
+            this.Write("private static Lazy<IStringLocalizer> _stringLocalizer = new Lazy<IStringLocalize" +
+                    "r>(() => global::");
+            
+            #line 63 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(nmspace));
+            
+            #line default
+            #line hidden
+            this.Write(".Localizers.GetStringLocalizer<global::");
+            
+            #line 63 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(nmspace));
+            
+            #line default
+            #line hidden
+            this.Write(".");
+            
+            #line 63 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(baseName));
+            
+            #line default
+            #line hidden
+            this.Write(">());\r\n\r\n");
+            
+            #line 65 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(GetIdent(ident + 1)));
+            
+            #line default
+            #line hidden
+            this.Write("public static IStringLocalizer StringLocalizer => _stringLocalizer.Value;\r\n\r\n");
+            
+            #line 67 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(GetIdent(ident + 1)));
+            
+            #line default
+            #line hidden
+            this.Write("public const string __BaseName = \"");
+            
+            #line 67 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(baseName));
+            
+            #line default
+            #line hidden
+            this.Write("\";\r\n\r\n");
+            
+            #line 69 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
+
+	}
+
+            
+            #line default
+            #line hidden
+            
+            #line 72 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(GetIdent(ident + 1)));
+            
+            #line default
+            #line hidden
             this.Write("public static class __Keys\r\n");
             
-            #line 64 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
+            #line 73 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GetIdent(ident + 1)));
             
             #line default
             #line hidden
             this.Write("{\r\n\r\n");
             
-            #line 66 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
+            #line 75 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
 
 				int resCount = 0;
 				foreach (var resource in resFile)
@@ -208,7 +241,7 @@ namespace ");
             #line hidden
             this.Write("\r\n");
             
-            #line 80 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
+            #line 89 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
 
 					}
 
@@ -216,28 +249,28 @@ namespace ");
             #line default
             #line hidden
             
-            #line 83 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
+            #line 92 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GetIdent(ident + 2)));
             
             #line default
             #line hidden
             this.Write("public const string ");
             
-            #line 83 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
+            #line 92 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(resName));
             
             #line default
             #line hidden
             this.Write(" = \"");
             
-            #line 83 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
+            #line 92 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(resource.Name));
             
             #line default
             #line hidden
             this.Write("\";\r\n");
             
-            #line 84 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
+            #line 93 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
 
 					if (0 < resource.NumericParameters.Count)
 					{
@@ -248,35 +281,35 @@ namespace ");
             #line default
             #line hidden
             
-            #line 90 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
+            #line 99 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GetIdent(ident + 2)));
             
             #line default
             #line hidden
             this.Write("public const string ");
             
-            #line 90 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
+            #line 99 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(resName));
             
             #line default
             #line hidden
             this.Write("_p");
             
-            #line 90 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
+            #line 99 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(numParam.ToCammelCase(removeUnderscores: false)));
             
             #line default
             #line hidden
             this.Write(" = \"");
             
-            #line 90 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
+            #line 99 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(numParam));
             
             #line default
             #line hidden
             this.Write("\";\r\n");
             
-            #line 91 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
+            #line 100 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
 
 						}
 					}
@@ -290,35 +323,35 @@ namespace ");
             #line default
             #line hidden
             
-            #line 100 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
+            #line 109 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GetIdent(ident + 2)));
             
             #line default
             #line hidden
             this.Write("public const string ");
             
-            #line 100 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
+            #line 109 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(resName));
             
             #line default
             #line hidden
             this.Write("_p_");
             
-            #line 100 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
+            #line 109 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(strParam.ToCammelCase(removeUnderscores: false)));
             
             #line default
             #line hidden
             this.Write(" = \"");
             
-            #line 100 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
+            #line 109 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(strParam));
             
             #line default
             #line hidden
             this.Write("\";\r\n");
             
-            #line 101 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
+            #line 110 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
 
 						}
 					}
@@ -329,16 +362,17 @@ namespace ");
             #line default
             #line hidden
             
-            #line 107 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
+            #line 116 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GetIdent(ident + 1)));
             
             #line default
             #line hidden
             this.Write("}\r\n");
             
-            #line 108 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
+            #line 117 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
 
-		
+		if (!onlyKeys)
+		{
 				foreach (var resource in resFile)
 				{
 					var resName = resource.Name.ToCammelCase(removeUnderscores: false);
@@ -351,48 +385,48 @@ namespace ");
             #line hidden
             this.Write("\r\n");
             
-            #line 118 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
+            #line 128 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GetIdent(ident + 1)));
             
             #line default
             #line hidden
             this.Write("public static string ");
             
-            #line 118 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
+            #line 128 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(resName));
             
             #line default
             #line hidden
             
-            #line 118 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
+            #line 128 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(withParams));
             
             #line default
             #line hidden
             this.Write("\r\n");
             
-            #line 119 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
+            #line 129 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GetIdent(ident + 1)));
             
             #line default
             #line hidden
-            this.Write("\t=> StringLocalizer[Resources.");
+            this.Write("\t=> StringLocalizer[");
             
-            #line 119 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(baseName));
+            #line 129 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(baseNamespace));
             
             #line default
             #line hidden
             this.Write(".__Keys.");
             
-            #line 119 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
+            #line 129 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(resName));
             
             #line default
             #line hidden
             this.Write("]!;\r\n");
             
-            #line 120 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
+            #line 130 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
 
 
 					if (0 < resource.NumericParameters.Count)
@@ -403,70 +437,70 @@ namespace ");
             #line hidden
             this.Write("\r\n");
             
-            #line 126 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
+            #line 136 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GetIdent(ident + 1)));
             
             #line default
             #line hidden
             this.Write("public static string ");
             
-            #line 126 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
+            #line 136 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(resName));
             
             #line default
             #line hidden
             this.Write("(object ");
             
-            #line 126 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
+            #line 136 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(string.Join(", object ", resource.NumericParameters.Select(x => x.ToCammelCase(removeUnderscores: false).FirstToLower()))));
             
             #line default
             #line hidden
             this.Write(")\r\n");
             
-            #line 127 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
+            #line 137 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GetIdent(ident + 1)));
             
             #line default
             #line hidden
             this.Write("{\r\n");
             
-            #line 128 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
+            #line 138 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GetIdent(ident + 1)));
             
             #line default
             #line hidden
-            this.Write("\tstring res = StringLocalizer[Resources.");
+            this.Write("\tstring res = StringLocalizer[");
             
-            #line 128 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(baseName));
+            #line 138 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(baseNamespace));
             
             #line default
             #line hidden
             this.Write(".__Keys.");
             
-            #line 128 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
+            #line 138 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(resName));
             
             #line default
             #line hidden
             this.Write("]!;\r\n");
             
-            #line 129 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
+            #line 139 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GetIdent(ident + 1)));
             
             #line default
             #line hidden
             this.Write("\treturn res.ReplacePlaceholders(new Dictionary<string, object>\r\n");
             
-            #line 130 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
+            #line 140 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GetIdent(ident + 1)));
             
             #line default
             #line hidden
             this.Write("\t\t{\r\n");
             
-            #line 131 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
+            #line 141 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
 
 						foreach (var numParam in resource.NumericParameters)
 						{
@@ -475,42 +509,42 @@ namespace ");
             #line default
             #line hidden
             
-            #line 135 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
+            #line 145 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GetIdent(ident + 1)));
             
             #line default
             #line hidden
-            this.Write("\t\t\t{ Resources.");
+            this.Write("\t\t\t{ ");
             
-            #line 135 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(baseName));
+            #line 145 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(baseNamespace));
             
             #line default
             #line hidden
             this.Write(".__Keys.");
             
-            #line 135 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
+            #line 145 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(resName));
             
             #line default
             #line hidden
             this.Write("_p");
             
-            #line 135 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
+            #line 145 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(numParam.ToCammelCase(removeUnderscores: false)));
             
             #line default
             #line hidden
             this.Write(", ");
             
-            #line 135 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
+            #line 145 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(numParam.ToCammelCase(removeUnderscores: false).FirstToLower()));
             
             #line default
             #line hidden
             this.Write(" },\r\n");
             
-            #line 136 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
+            #line 146 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
 
 						}
 
@@ -518,21 +552,21 @@ namespace ");
             #line default
             #line hidden
             
-            #line 139 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
+            #line 149 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GetIdent(ident + 1)));
             
             #line default
             #line hidden
             this.Write("\t\t});\r\n");
             
-            #line 140 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
+            #line 150 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GetIdent(ident + 1)));
             
             #line default
             #line hidden
             this.Write("}\r\n");
             
-            #line 141 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
+            #line 151 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
 
 					}
 
@@ -544,70 +578,70 @@ namespace ");
             #line hidden
             this.Write("\r\n");
             
-            #line 148 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
+            #line 158 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GetIdent(ident + 1)));
             
             #line default
             #line hidden
             this.Write("public static string ");
             
-            #line 148 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
+            #line 158 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(resName));
             
             #line default
             #line hidden
             this.Write("(object ");
             
-            #line 148 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
+            #line 158 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(string.Join(", object ", resource.StringParameters.Select(x => x.ToCammelCase(removeUnderscores: false).FirstToLower()))));
             
             #line default
             #line hidden
             this.Write(")\r\n");
             
-            #line 149 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
+            #line 159 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GetIdent(ident + 1)));
             
             #line default
             #line hidden
             this.Write("{\r\n");
             
-            #line 150 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
+            #line 160 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GetIdent(ident + 1)));
             
             #line default
             #line hidden
-            this.Write("\tstring res = StringLocalizer[Resources.");
+            this.Write("\tstring res = StringLocalizer[");
             
-            #line 150 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(baseName));
+            #line 160 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(baseNamespace));
             
             #line default
             #line hidden
             this.Write(".__Keys.");
             
-            #line 150 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
+            #line 160 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(resName));
             
             #line default
             #line hidden
             this.Write("]!;\r\n");
             
-            #line 151 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
+            #line 161 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GetIdent(ident + 1)));
             
             #line default
             #line hidden
             this.Write("\treturn res.ReplacePlaceholders(new Dictionary<string, object>\r\n");
             
-            #line 152 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
+            #line 162 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GetIdent(ident + 1)));
             
             #line default
             #line hidden
             this.Write("\t\t{\r\n");
             
-            #line 153 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
+            #line 163 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
 
 						foreach (var strParam in resource.StringParameters)
 						{
@@ -616,42 +650,42 @@ namespace ");
             #line default
             #line hidden
             
-            #line 157 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
+            #line 167 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GetIdent(ident + 1)));
             
             #line default
             #line hidden
-            this.Write("\t\t\t{ Resources.");
+            this.Write("\t\t\t{ ");
             
-            #line 157 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(baseName));
+            #line 167 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(baseNamespace));
             
             #line default
             #line hidden
             this.Write(".__Keys.");
             
-            #line 157 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
+            #line 167 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(resName));
             
             #line default
             #line hidden
             this.Write("_p_");
             
-            #line 157 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
+            #line 167 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(strParam.ToCammelCase(removeUnderscores: false)));
             
             #line default
             #line hidden
             this.Write(", ");
             
-            #line 157 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
+            #line 167 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(strParam.ToCammelCase(removeUnderscores: false).FirstToLower()));
             
             #line default
             #line hidden
             this.Write(" },\r\n");
             
-            #line 158 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
+            #line 168 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
 
 						}
 
@@ -659,144 +693,156 @@ namespace ");
             #line default
             #line hidden
             
-            #line 161 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
+            #line 171 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GetIdent(ident + 1)));
             
             #line default
             #line hidden
             this.Write("\t\t});\r\n");
             
-            #line 162 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
+            #line 172 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GetIdent(ident + 1)));
             
             #line default
             #line hidden
             this.Write("}\r\n");
             
-            #line 163 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
+            #line 173 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
 
 					}
 					resCount++;
 				}
+			}
 
             
             #line default
             #line hidden
             
-            #line 168 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(GetIdent(ident)));
-            
-            #line default
-            #line hidden
-            this.Write("}\r\n\r\n");
-            
-            #line 170 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(GetIdent(ident)));
-            
-            #line default
-            #line hidden
-            this.Write("public partial class ");
-            
-            #line 170 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(className));
-            
-            #line default
-            #line hidden
-            this.Write("LocalizerFactory : ResourceLocalizer<");
-            
-            #line 170 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(resPath.TrimPrefix(targetProject).Replace(System.IO.Path.DirectorySeparatorChar, '.')));
-            
-            #line default
-            #line hidden
-            this.Write(".");
-            
-            #line 170 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(resFile.Name));
-            
-            #line default
-            #line hidden
-            this.Write(">\r\n");
-            
-            #line 171 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(GetIdent(ident)));
-            
-            #line default
-            #line hidden
-            this.Write("{\r\n");
-            
-            #line 172 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(GetIdent(ident)));
-            
-            #line default
-            #line hidden
-            this.Write("\tpublic ");
-            
-            #line 172 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(className));
-            
-            #line default
-            #line hidden
-            this.Write("LocalizerFactory(IServiceProvider serviceProvider)\r\n");
-            
-            #line 173 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(GetIdent(ident)));
-            
-            #line default
-            #line hidden
-            this.Write("\t\t: base(serviceProvider,\r\n");
-            
-            #line 174 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(GetIdent(ident)));
-            
-            #line default
-            #line hidden
-            this.Write("\t\t\t");
-            
-            #line 174 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(className));
-            
-            #line default
-            #line hidden
-            this.Write(".__BaseName,\r\n");
-            
-            #line 175 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(GetIdent(ident)));
-            
-            #line default
-            #line hidden
-            this.Write("\t\t\tnew System.Reflection.AssemblyName(typeof(");
-            
-            #line 175 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(className));
-            
-            #line default
-            #line hidden
-            this.Write("LocalizerFactory).Assembly.FullName!).Name!)\r\n");
-            
-            #line 176 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(GetIdent(ident)));
-            
-            #line default
-            #line hidden
-            this.Write("\t{\r\n");
-            
-            #line 177 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(GetIdent(ident)));
-            
-            #line default
-            #line hidden
-            this.Write("\t}\r\n");
-            
-            #line 178 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
+            #line 179 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GetIdent(ident)));
             
             #line default
             #line hidden
             this.Write("}\r\n");
             
-            #line 179 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
+            #line 180 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
 
+		if (!onlyKeys)
+		{
+
+            
+            #line default
+            #line hidden
+            this.Write("\r\n");
+            
+            #line 185 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(GetIdent(ident)));
+            
+            #line default
+            #line hidden
+            this.Write("public partial class ");
+            
+            #line 185 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(className));
+            
+            #line default
+            #line hidden
+            this.Write("LocalizerFactory : ResourceLocalizer<");
+            
+            #line 185 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(resPath.TrimPrefix(targetProject).Replace(System.IO.Path.DirectorySeparatorChar, '.')));
+            
+            #line default
+            #line hidden
+            this.Write(".");
+            
+            #line 185 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(resFile.Name));
+            
+            #line default
+            #line hidden
+            this.Write(">\r\n");
+            
+            #line 186 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(GetIdent(ident)));
+            
+            #line default
+            #line hidden
+            this.Write("{\r\n");
+            
+            #line 187 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(GetIdent(ident)));
+            
+            #line default
+            #line hidden
+            this.Write("\tpublic ");
+            
+            #line 187 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(className));
+            
+            #line default
+            #line hidden
+            this.Write("LocalizerFactory(IServiceProvider serviceProvider)\r\n");
+            
+            #line 188 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(GetIdent(ident)));
+            
+            #line default
+            #line hidden
+            this.Write("\t\t: base(serviceProvider,\r\n");
+            
+            #line 189 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(GetIdent(ident)));
+            
+            #line default
+            #line hidden
+            this.Write("\t\t\t");
+            
+            #line 189 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(className));
+            
+            #line default
+            #line hidden
+            this.Write(".__BaseName,\r\n");
+            
+            #line 190 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(GetIdent(ident)));
+            
+            #line default
+            #line hidden
+            this.Write("\t\t\tnew System.Reflection.AssemblyName(typeof(");
+            
+            #line 190 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(className));
+            
+            #line default
+            #line hidden
+            this.Write("LocalizerFactory).Assembly.FullName!).Name!)\r\n");
+            
+            #line 191 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(GetIdent(ident)));
+            
+            #line default
+            #line hidden
+            this.Write("\t{\r\n");
+            
+            #line 192 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(GetIdent(ident)));
+            
+            #line default
+            #line hidden
+            this.Write("\t}\r\n");
+            
+            #line 193 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(GetIdent(ident)));
+            
+            #line default
+            #line hidden
+            this.Write("}\r\n");
+            
+            #line 194 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
+
+		}
 
 		for (int i = resStructure.Count - 1; 0 <= i; i--)
 		{
@@ -805,14 +851,14 @@ namespace ");
             #line default
             #line hidden
             
-            #line 184 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
+            #line 200 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GetIdent(i)));
             
             #line default
             #line hidden
             this.Write("}\r\n");
             
-            #line 185 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
+            #line 201 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
 
 		}
 	}
@@ -824,7 +870,7 @@ namespace ");
             return this.GenerationEnvironment.ToString();
         }
         
-        #line 190 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
+        #line 206 "C:\Code\GitLab\En_GitHub\envelope-resourcesgenerator\src\Envelope.ResourcesGenerator\ResourcesGenerator.tt"
 
 	private string GetIdent(int count)
 	{

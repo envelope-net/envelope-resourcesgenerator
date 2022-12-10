@@ -15,6 +15,7 @@
 	string targetProject = GetParam("TargetProject");
 	string nmspace = GetParam("RootNamespace");
 	var resFiles = GetParam<List<Envelope.Localization.ResourceFile>>("ResFiles");
+	var onlyKeys = GetParam<bool>("OnlyKeys");
 	
 	foreach (var resFile in resFiles)
 	{
@@ -51,15 +52,23 @@ namespace <#= nmspace #>;
 		}
 		string className = resFile.Name.ToCammelCase(removeUnderscores: false);
 		var baseName = resPath.TrimPrefix(targetProject).Replace(System.IO.Path.DirectorySeparatorChar, '.') + "." + resFile.Name;
+		var baseNamespace = "global::" + nmspace + "." + baseName;
 #>
 <#= GetIdent(ident) #>public partial class <#= className #>
 <#= GetIdent(ident) #>{
-<#= GetIdent(ident + 1) #>private static Lazy<IStringLocalizer> _stringLocalizer = new Lazy<IStringLocalizer>(() => Resources.Localizers.GetStringLocalizer<Resources.<#= baseName #>>());
+<#
+	if (!onlyKeys)
+	{
+#>
+<#= GetIdent(ident + 1) #>private static Lazy<IStringLocalizer> _stringLocalizer = new Lazy<IStringLocalizer>(() => global::<#= nmspace #>.Localizers.GetStringLocalizer<global::<#= nmspace #>.<#= baseName #>>());
 
 <#= GetIdent(ident + 1) #>public static IStringLocalizer StringLocalizer => _stringLocalizer.Value;
 
 <#= GetIdent(ident + 1) #>public const string __BaseName = "<#= baseName #>";
 
+<#
+	}
+#>
 <#= GetIdent(ident + 1) #>public static class __Keys
 <#= GetIdent(ident + 1) #>{
 
@@ -106,7 +115,8 @@ namespace <#= nmspace #>;
 #>
 <#= GetIdent(ident + 1) #>}
 <#
-		
+		if (!onlyKeys)
+		{
 				foreach (var resource in resFile)
 				{
 					var resName = resource.Name.ToCammelCase(removeUnderscores: false);
@@ -116,7 +126,7 @@ namespace <#= nmspace #>;
 #>
 
 <#= GetIdent(ident + 1) #>public static string <#= resName #><#= withParams #>
-<#= GetIdent(ident + 1) #>	=> StringLocalizer[Resources.<#= baseName #>.__Keys.<#= resName #>]!;
+<#= GetIdent(ident + 1) #>	=> StringLocalizer[<#= baseNamespace #>.__Keys.<#= resName #>]!;
 <#
 
 					if (0 < resource.NumericParameters.Count)
@@ -125,14 +135,14 @@ namespace <#= nmspace #>;
 
 <#= GetIdent(ident + 1) #>public static string <#= resName #>(object <#= string.Join(", object ", resource.NumericParameters.Select(x => x.ToCammelCase(removeUnderscores: false).FirstToLower())) #>)
 <#= GetIdent(ident + 1) #>{
-<#= GetIdent(ident + 1) #>	string res = StringLocalizer[Resources.<#= baseName #>.__Keys.<#= resName #>]!;
+<#= GetIdent(ident + 1) #>	string res = StringLocalizer[<#= baseNamespace #>.__Keys.<#= resName #>]!;
 <#= GetIdent(ident + 1) #>	return res.ReplacePlaceholders(new Dictionary<string, object>
 <#= GetIdent(ident + 1) #>		{
 <#
 						foreach (var numParam in resource.NumericParameters)
 						{
 #>
-<#= GetIdent(ident + 1) #>			{ Resources.<#= baseName #>.__Keys.<#= resName #>_p<#= numParam.ToCammelCase(removeUnderscores: false) #>, <#= numParam.ToCammelCase(removeUnderscores: false).FirstToLower() #> },
+<#= GetIdent(ident + 1) #>			{ <#= baseNamespace #>.__Keys.<#= resName #>_p<#= numParam.ToCammelCase(removeUnderscores: false) #>, <#= numParam.ToCammelCase(removeUnderscores: false).FirstToLower() #> },
 <#
 						}
 #>
@@ -147,14 +157,14 @@ namespace <#= nmspace #>;
 
 <#= GetIdent(ident + 1) #>public static string <#= resName #>(object <#= string.Join(", object ", resource.StringParameters.Select(x => x.ToCammelCase(removeUnderscores: false).FirstToLower())) #>)
 <#= GetIdent(ident + 1) #>{
-<#= GetIdent(ident + 1) #>	string res = StringLocalizer[Resources.<#= baseName #>.__Keys.<#= resName #>]!;
+<#= GetIdent(ident + 1) #>	string res = StringLocalizer[<#= baseNamespace #>.__Keys.<#= resName #>]!;
 <#= GetIdent(ident + 1) #>	return res.ReplacePlaceholders(new Dictionary<string, object>
 <#= GetIdent(ident + 1) #>		{
 <#
 						foreach (var strParam in resource.StringParameters)
 						{
 #>
-<#= GetIdent(ident + 1) #>			{ Resources.<#= baseName #>.__Keys.<#= resName #>_p_<#= strParam.ToCammelCase(removeUnderscores: false) #>, <#= strParam.ToCammelCase(removeUnderscores: false).FirstToLower() #> },
+<#= GetIdent(ident + 1) #>			{ <#= baseNamespace #>.__Keys.<#= resName #>_p_<#= strParam.ToCammelCase(removeUnderscores: false) #>, <#= strParam.ToCammelCase(removeUnderscores: false).FirstToLower() #> },
 <#
 						}
 #>
@@ -164,8 +174,13 @@ namespace <#= nmspace #>;
 					}
 					resCount++;
 				}
+			}
 #>
 <#= GetIdent(ident) #>}
+<#
+		if (!onlyKeys)
+		{
+#>
 
 <#= GetIdent(ident) #>public partial class <#= className #>LocalizerFactory : ResourceLocalizer<<#= resPath.TrimPrefix(targetProject).Replace(System.IO.Path.DirectorySeparatorChar, '.') #>.<#= resFile.Name #>>
 <#= GetIdent(ident) #>{
@@ -177,6 +192,7 @@ namespace <#= nmspace #>;
 <#= GetIdent(ident) #>	}
 <#= GetIdent(ident) #>}
 <#
+		}
 
 		for (int i = resStructure.Count - 1; 0 <= i; i--)
 		{
